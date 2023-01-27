@@ -15,12 +15,12 @@ a:hover {
 
 button {
   display: inline-block;
-  margin: 5px;
+  margin: 10px;
   cursor: pointer;
   font-size: 100%;
   background-color: #563d7c;
   border-radius: 5px;
-  padding: 2px 10px;
+  padding: 2px 20px;
   color: white;
   border: 0;
   transition: background-color 0.1s;
@@ -32,6 +32,8 @@ button:hover {
 
 .choices button {
   display: block;
+  padding: 0px 40px;
+  margin: 15px;
 }
 
 input[type="text"] {

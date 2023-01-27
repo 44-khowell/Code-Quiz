@@ -1,17 +1,27 @@
 
 /*
 var startQButton = document.querySelector("#start");
-var timeSpan = document.querySelector("#time");
+
 var submitButton = document.querySelector("#submit");
 var initialsText = document.querySelector("#initials");
 var finalScore = document.querySelector("#final-score");
+
+// Variables for Highscore 
+  var highScore = localStorage.getItem("highScore"); 
+  localStorage.setItem("finalScore", );
+
 */
 
+// Variable used in Time Interval to display quiz duration in html
+var timeSpan = document.querySelector("#time");
+
+// Variables for function - startQuiz(event)
 const startBtn = document.getElementById('start');
 const startSection = document.getElementById('start-screen');
 const questionTitle = document.getElementById('question-title');
 const choiceAns = document.getElementById('choices');
 const questionDiv = document.getElementById('questions');
+const choicesBtnData = document.getElementById('choices');
 
 // Questions Object Arrays 1
 const questions = [
@@ -41,6 +51,7 @@ const questions = [
       Answer: 1
   },
 ]
+//LOGGING outputs from the Object 
 console.log(questions);
 console.log('Question:',questions[0].question);
 console.log('Answer:',questions[0].choiceAns[0]);
@@ -48,9 +59,7 @@ console.log('Index:',questions[0].Answer);
 
 
 
-//console.log('question ans from array',choiceAns);
-//let answer = questions[0].choiceAns[0];
-//console.log('Ans2:',answer);
+
 
 //GLOABAL Variable to keep count of the questions
 let questionNumber = 0;
@@ -65,44 +74,45 @@ function startQuiz(event) {
 console.log('questions array length:',questions[0].choiceAns.length);
 
   for (let i = 0; i < questions[0].choiceAns.length; i++) {
-    const answer = questions[0].choiceAns[i];
+    const answer = questions[0].choiceAns[i];       // Extracting each answer in turn from the 1st array
     // console.log('each ans: ', answer);
 
-    const item = document.createElement('p');
-    item.textContent = answer;
-    choices.appendChild(item);
+    const item = document.createElement('p');       // Creating an element <p> tag 
+    const btn = document.createElement("BUTTON");   // Creating an eleement <button> tag
+    item.textContent = answer;                      // Let textContent for the <p> tag be the selection from the array 
+    //choices.appendChild(item);                      // Now append text to <p> tag in html
+    choices.appendChild(btn).appendChild(item);     // Now append <button> to <p> tag & text to <p> tag within html
   }
 
+  questionNumber++;                                 // Increment Question counter each time user selects one
+  console.log('Question counter value: ',questionNumber);
+  
+  // Start Timer for question duration
+  setTimer();
 
-/*
-  // Looping thro Choices properties in each index of the array
-  answer.foreach(function (singleChoice) {
-    const item = document.createElement('p');
-    item.textContent = singleChoice;
-    choices.appendChild(item);
-  })
-*/
+
+
+
+}
+// Logging Code only
+console.log('startButton o/p: ', startBtn);
+
+
+function newQuestion(event){
+
 
 }
 
-console.log('startButton o/p: ', startBtn);
-// Start Of Quiz 
+// ******* Start of Quiz - kick-off timer, display question *******
+
+// Monitoring Quiz start button with eventListener 
 startBtn.addEventListener("click", startQuiz);
 
 
 
 
-// Variables for Highscore 
-var highScore = localStorage.getItem("highScore"); 
-// localStorage.setItem("finalScore", );
-
-
-
-
-
-
-
-
+// ******** Timer function code ********
+// *************************************
 
 // SetTimer variable for function setTimer()
 var secondsLeft = 15;

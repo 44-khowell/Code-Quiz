@@ -23,6 +23,13 @@ const choiceAns = document.getElementById('choices');
 const questionDiv = document.getElementById('questions');
 //const choicesBtnData = document.getElementById('choices');
 
+// **** GLOABAL Variables ****
+let questionNumber = 0;                      // Initialise count for Questions Array, so that 1st question is selected
+let hasWon = false;
+let item;
+let btn;
+var timerInterval;                          // Used in setTimer() function
+
 // Questions Object Arrays 1
 const questions = [
   {
@@ -53,17 +60,37 @@ const questions = [
 ]
 //LOGGING outputs from the Object 
 console.log(questions);
-console.log('Question:',questions[0].question);
-console.log('Answer:',questions[0].choiceAns[0]);
-console.log('Index:',questions[0].Answer);
+//console.log('Question:',questions[0].question);
+//console.log('Answer:',questions[0].choiceAns[0]);
+//console.log('Index:',questions[0].Answer);
 
 
+function quizQuestions(arrQuestionNo, arrQuestions) {
 
+  questionTitle.textContent = questions[arrQuestionNo].question;  // Assess 1st Quest from the QuObjectArray
 
+  // Checking how to access array size
+  console.log('questions array length:',questions[arrQuestionNo].choiceAns.length);
+  
+    for (let i = 0; i < questions[arrQuestionNo].choiceAns.length; i++) {
+      const answer = questions[arrQuestionNo].choiceAns[i];       // Extracting each answer in turn from the 1st array
+      // console.log('each ans: ', answer);
+  
+      item = document.createElement('p');       // Creating an element <p> tag 
+      btn = document.createElement("BUTTON");   // Creating an eleement <button> tag
+      item.textContent = answer;                      // Let textContent for the <p> tag be the selection from the array 
+      //choices.appendChild(item);                      // Now append text to <p> tag in html
+      choices.appendChild(btn).appendChild(item);     // Now append <button> to <p> tag & text to <p> tag within html
+    }
+    //Output check
+    console.log('Output check');
+    console.log('Question:',questions[arrQuestionNo].question);
+    console.log('Answer:',questions[arrQuestionNo].choiceAns[arrQuestionNo]);
+    console.log('Index:',questions[arrQuestionNo].Answer);
 
-//GLOABAL Variable to keep count of the questions
-let questionNumber = 0;
-let hasWon = false;
+   // questionNumber++;                                 // Increment Question counter each time user selects one
+   // console.log('Question counter value: ',questionNumber);
+}
 
 
 
@@ -71,6 +98,11 @@ function startQuiz(event) {
   startSection.style.display = 'none';      // Stop displying <div> containing Coding Quiz Chal
 
   questionDiv.className = "";               // This removes "hide" from the class and makes our question visible
+  
+ // let questionNumber = 0;                   
+
+  quizQuestions(questionNumber, questions);
+/*
   questionTitle.textContent = questions[0].question;  // Assess 1st Quest from the QuObjectArray
 
 // Checking how to access array size
@@ -89,14 +121,14 @@ console.log('questions array length:',questions[0].choiceAns.length);
 
   questionNumber++;                                 // Increment Question counter each time user selects one
   console.log('Question counter value: ',questionNumber);
-  
+*/
+
   // Start Timer for question duration
   setTimer();
 
 }
 // Logging Code only
 console.log('startButton o/p: ', startBtn);
-
 
 
 function winGuess(action) {
@@ -110,8 +142,28 @@ function winGuess(action) {
   if (action == true) {
     italic.textContent = "Correct!";
   } 
+  // Display ans in <p> tag
   choices.appendChild(tag).appendChild(italic);
 
+  // Tests if user still has time to answer more questions
+  if (secondsLeft > 0) {
+    // Set counter for the next question
+    questionNumber++;
+    console.log('Question counter value: ',questionNumber);
+    console.log('Timer value: ',secondsLeft);
+
+    // Get the NEXT question from the Object array 
+    quizQuestions(questionNumber, questions);
+    //choiceAns.remove();
+    // choiceAns.style.display = 'none';
+    //italic.textContent = " "
+  }
+
+  if (secondsLeft == 0) {
+    // Clears interval for the timer
+    clearInterval(timerInterval);
+
+  }
 }
 
 function loseGuess(action) {
@@ -122,30 +174,36 @@ function loseGuess(action) {
   var tag = document.createElement('p');
   var italic = document.createElement('em');
   // Test if answer is correct or wrong 
-  if (action == true) {
+  if (action == false) {
     italic.textContent = "Wrong!";
   }
+  // Display ans in <p> tag
   choices.appendChild(tag).appendChild(italic);
-  
+
+  if (secondsLeft > 0) {
+    // Set counter for the next question
+    questionNumber++;
+    console.log('Question counter value: ',questionNumber);
+    console.log('Timer value: ',secondsLeft);
+    // Get the NEXT question from the Object array 
+    quizQuestions(questionNumber, questions);
+  }
+
+  if (secondsLeft == 0) {
+    // Clears interval for the timer
+    clearInterval(timerInterval);
+
+  }
 }
 
 
 
 
-
-function newQuestion(event){
-
-}
 
 // ******* Start of Quiz - kick-off timer, display question *******
 
 // Monitoring Quiz start button with eventListener 
 startBtn.addEventListener("click", startQuiz);
-
-
-
-
-
 
 
 // ********* Detect Answers Buttons to Questions *********
@@ -178,6 +236,27 @@ choiceAns.addEventListener("click", function(element) {
     loseGuess(action);
     console.log('found it : Qu4 ', element.target.nodeName);
   }
+  
+  if (element.target && element.target.nodeName == "P" && text == '1. Desk Applications') {
+    // Set variable as result of choice to function
+    let action = false;
+    // Display Choice result
+    loseGuess(action);
+    console.log('found it : Qu1 ', element.target.nodeName);
+  } else if ((element.target && element.target.nodeName == "P" && text == '2. Client Server Web Applications')) {
+    let action = true;
+    winGuess(action);
+    console.log('found it : Qu2 ', element.target.nodeName);
+  } else if ((element.target && element.target.nodeName == "P" && text == '3. Web Servers')) {
+    let action = false;
+    loseGuess(action);
+    console.log('found it : Qu3 ', element.target.nodeName);
+  } else {
+    let action = false;
+    loseGuess(action);
+    console.log('found it : Qu4 ', element.target.nodeName);
+  }
+
 });
 
 

@@ -36,6 +36,16 @@ button:hover {
   margin: 15px;
 }
 
+.choices em {
+  font-size: 30px;
+  padding: 20px;
+  color: lightslategray;
+}
+
+.choices hr {
+  color: lightslategray;
+}
+
 input[type="text"] {
   font-size: 100%;
 }

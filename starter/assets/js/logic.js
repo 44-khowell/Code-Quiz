@@ -21,33 +21,33 @@ const startSection = document.getElementById('start-screen');
 const questionTitle = document.getElementById('question-title');
 const choiceAns = document.getElementById('choices');
 const questionDiv = document.getElementById('questions');
-const choicesBtnData = document.getElementById('choices');
+//const choicesBtnData = document.getElementById('choices');
 
 // Questions Object Arrays 1
 const questions = [
   {
       question: "When was Java released?",
-     choiceAns: ["1996","2000","1995","2011"],
+     choiceAns: ["1. 1996","2. 2000","3. 1995","4. 2011"],
         Answer: 2                               //Index of choices array
   },
   {
     question: "What is the most common application of Java?",
-   choiceAns: ["Desk Applications","Client Server Web Applications"," Web Servers","Scripts"],
+   choiceAns: ["1. Desk Applications","2. Client Server Web Applications","3. Web Servers","4. Scripts"],
       Answer: 1
   },
   {
     question: "Is Java a OOP Language?",
-   choiceAns: ["No", "Yes"],
+   choiceAns: ["1. No", "2. Yes"],
       Answer: 1
   },
   {
     question: "Who owns Java?",
-   choiceAns: ["Sun Microsystems","Oracle","Google","Mircosoft"],
+   choiceAns: ["1. Sun Microsystems","2. Oracle","Google","3. Mircosoft"],
       Answer: 2
   },
   {
     question: "Is Java a Compiled or Interpreted language?",
-   choiceAns: ["Complied","Interpreted"],
+   choiceAns: ["1. Complied","2. Interpreted"],
       Answer: 1
   },
 ]
@@ -63,6 +63,9 @@ console.log('Index:',questions[0].Answer);
 
 //GLOABAL Variable to keep count of the questions
 let questionNumber = 0;
+let hasWon = false;
+
+
 
 function startQuiz(event) {
   startSection.style.display = 'none';      // Stop displying <div> containing Coding Quiz Chal
@@ -90,16 +93,47 @@ console.log('questions array length:',questions[0].choiceAns.length);
   // Start Timer for question duration
   setTimer();
 
-
-
-
 }
 // Logging Code only
 console.log('startButton o/p: ', startBtn);
 
 
-function newQuestion(event){
 
+function winGuess(action) {
+  // Create dividing line for result 
+  const horizLine = document.createElement('hr');
+  choices.appendChild(horizLine); 
+  // Create paragraph for answer 
+  var tag = document.createElement('p');
+  var italic = document.createElement('em');
+  // Test if answer is correct or wrong 
+  if (action == true) {
+    italic.textContent = "Correct!";
+  } 
+  choices.appendChild(tag).appendChild(italic);
+
+}
+
+function loseGuess(action) {
+  // Create dividing line for result 
+  const horizLine = document.createElement('hr');
+  choices.appendChild(horizLine); 
+  // Create paragraph for answer 
+  var tag = document.createElement('p');
+  var italic = document.createElement('em');
+  // Test if answer is correct or wrong 
+  if (action == true) {
+    italic.textContent = "Wrong!";
+  }
+  choices.appendChild(tag).appendChild(italic);
+  
+}
+
+
+
+
+
+function newQuestion(event){
 
 }
 
@@ -107,6 +141,64 @@ function newQuestion(event){
 
 // Monitoring Quiz start button with eventListener 
 startBtn.addEventListener("click", startQuiz);
+
+
+
+
+
+
+
+// ********* Detect Answers Buttons to Questions *********
+// Get the element, add click listener to detect Answers to Questions
+choiceAns.addEventListener("click", function(element) {
+  // e.target is the click element!
+  // If it was a <p> tag 
+  console.log('target: ',element.target);
+  console.log('nodeName: ', element.target.nodeName);
+  // Grab text inside <p> tag for testing 
+  let text = element.target.innerHTML;
+  console.log('text is: ', text);
+  // Target <p> tag of button and compare its contents
+  if (element.target && element.target.nodeName == "P" && text == '1. 1996') {
+    // Set variable as result of choice to function
+    let action = false;
+    // Display Choice result
+    loseGuess(action);
+    console.log('found it : Qu1 ', element.target.nodeName);
+  } else if ((element.target && element.target.nodeName == "P" && text == '2. 2000')) {
+    let action = false;
+    loseGuess(action);
+    console.log('found it : Qu2 ', element.target.nodeName);
+  } else if ((element.target && element.target.nodeName == "P" && text == '3. 1995')) {
+    let action = true;
+    winGuess(action);
+    console.log('found it : Qu3 ', element.target.nodeName);
+  } else {
+    let action = false;
+    loseGuess(action);
+    console.log('found it : Qu4 ', element.target.nodeName);
+  }
+});
+
+
+
+
+
+/*
+// Get the element, add click listener to Qu Answers
+choiceAns.addEventListener("click", function(element) {
+  // e.target is the click element!
+  // If it was a <p> tag 
+  console.log('target: ',element.target);
+  console.log('nodeName: ', element.target.nodeName);
+
+  if (element.target && element.target.nodeName == "P") {
+    console.log('found it : ', element.target.nodeName);
+  }
+});
+*/
+
+
 
 
 
@@ -126,11 +218,19 @@ function setTimer() {
         
         // display current time 
         timeSpan.textContent = secondsLeft;
-
+        if (secondsLeft >= 0) {
+          // Test if success condition has been met 
+          if (hasWon && secondsLeft > 0) {
+            //Clear interval & Stops timer 
+            clearInterval(timerInterval);
+            winGuess();
+          }
+        }
+        // Test if time has run out
         if (secondsLeft === 0) {
             // Stops execution of the action at set interval 
             clearInterval(timerInterval);
-            //return;
+            loseGuess();
             // Calls function to display current time 
             //sendMessage();
         }

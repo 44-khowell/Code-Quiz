@@ -32,8 +32,8 @@ button:hover {
 
 .choices button {
   display: block;
-  padding: 0px 40px;
-  margin: 15px;
+  padding: 10px 30px;
+  margin: 25px;
 }
 
 .choices em {

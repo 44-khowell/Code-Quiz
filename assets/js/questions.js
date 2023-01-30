@@ -22,8 +22,8 @@ const questions = [
   },
   {
     question: "Who owns Java?",
-   choiceAns: ["1. Sun Microsystems","2. Oracle","Google","3. Mircosoft"],
-      Answer: 2
+   choiceAns: ["1. Sun Microsystems","2. Oracle","3. Google","4. Mircosoft"],
+      Answer: 1
   },
   {
     question: "Is Java a Compiled or Interpreted language?",

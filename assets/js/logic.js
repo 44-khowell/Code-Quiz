@@ -21,6 +21,7 @@ const startSection = document.getElementById('start-screen');
 const questionTitle = document.getElementById('question-title');
 const choiceAns = document.getElementById('choices');
 const questionDiv = document.getElementById('questions');
+const lineDiv = document.getElementById('line');
 //const choicesBtnData = document.getElementById('choices');
 
 // **** GLOABAL Variables ****
@@ -67,13 +68,14 @@ console.log(questions);
 
 function quizQuestions(arrQuestionNo, arrQuestions) {
 
-  questionTitle.textContent = questions[arrQuestionNo].question;  // Assess 1st Quest from the QuObjectArray
+  questionTitle.textContent = arrQuestions[arrQuestionNo].question;  // Assess 1st Quest from the QuObjectArray
 
   // Checking how to access array size
-  console.log('questions array length:',questions[arrQuestionNo].choiceAns.length);
-  
-    for (let i = 0; i < questions[arrQuestionNo].choiceAns.length; i++) {
-      const answer = questions[arrQuestionNo].choiceAns[i];       // Extracting each answer in turn from the 1st array
+  console.log('questions ANS array length:',arrQuestions[arrQuestionNo].choiceAns.length);
+  console.log('incoming array is: ', arrQuestions);
+
+    for (let i = 0; i < arrQuestions[arrQuestionNo].choiceAns.length; i++) {
+      const answer = arrQuestions[arrQuestionNo].choiceAns[i];       // Extracting each answer in turn from the 1st array
       // console.log('each ans: ', answer);
   
       item = document.createElement('p');       // Creating an element <p> tag 
@@ -82,17 +84,19 @@ function quizQuestions(arrQuestionNo, arrQuestions) {
       //choices.appendChild(item);                      // Now append text to <p> tag in html
       choices.appendChild(btn).appendChild(item);     // Now append <button> to <p> tag & text to <p> tag within html
     }
-    //Output check
-    console.log('Output check');
-    console.log('Question:',questions[arrQuestionNo].question);
-    console.log('Answer:',questions[arrQuestionNo].choiceAns[arrQuestionNo]);
-    console.log('Index:',questions[arrQuestionNo].Answer);
-
+    //Output Debug check
+    console.log('**** Output check ****');
+    console.log('Question:',arrQuestions[arrQuestionNo].question);
+    console.log('Index:',arrQuestions[arrQuestionNo].Answer);
+    let index = arrQuestions[arrQuestionNo].Answer
+    console.log('Answer:',arrQuestions[arrQuestionNo].choiceAns[index]);
+    return;
    // questionNumber++;                                 // Increment Question counter each time user selects one
    // console.log('Question counter value: ',questionNumber);
 }
 
 
+// ***** Quiz START *****
 
 function startQuiz(event) {
   startSection.style.display = 'none';      // Stop displying <div> containing Coding Quiz Chal
@@ -132,18 +136,22 @@ console.log('startButton o/p: ', startBtn);
 
 
 function winGuess(action) {
+  console.log("now in winGuess function");
   // Create dividing line for result 
   const horizLine = document.createElement('hr');
-  choices.appendChild(horizLine); 
+  line.appendChild(horizLine); 
   // Create paragraph for answer 
   var tag = document.createElement('p');
   var italic = document.createElement('em');
   // Test if answer is correct or wrong 
+  console.log('The value of action is: ', action);
   if (action == true) {
     italic.textContent = "Correct!";
+    //Re-initialise "action" variable ready for testing Answer for the next question
+    action = false;
   } 
-  // Display ans in <p> tag
-  choices.appendChild(tag).appendChild(italic);
+  // Display RESULT-ANSWER in <p> tag
+  line.appendChild(tag).appendChild(italic);
 
   // Tests if user still has time to answer more questions
   if (secondsLeft > 0) {
@@ -151,12 +159,17 @@ function winGuess(action) {
     questionNumber++;
     console.log('Question counter value: ',questionNumber);
     console.log('Timer value: ',secondsLeft);
+    console.log('current value of "action" is ', action);
 
-    // Get the NEXT question from the Object array 
+    // CLEAR previous questions ANSWSERS
+    //line.textContent = '';
+    choiceAns.textContent = '';
+    // Get the NEXT question from the Object array
     quizQuestions(questionNumber, questions);
+
     //choiceAns.remove();
     // choiceAns.style.display = 'none';
-    //italic.textContent = " "
+    //italic.textContent = ' ';
   }
 
   if (secondsLeft == 0) {
@@ -185,6 +198,9 @@ function loseGuess(action) {
     questionNumber++;
     console.log('Question counter value: ',questionNumber);
     console.log('Timer value: ',secondsLeft);
+    
+    // CLEAR previous questions ANSWSERS
+    choiceAns.textContent = '';
     // Get the NEXT question from the Object array 
     quizQuestions(questionNumber, questions);
   }
@@ -208,15 +224,90 @@ startBtn.addEventListener("click", startQuiz);
 
 // ********* Detect Answers Buttons to Questions *********
 // Get the element, add click listener to detect Answers to Questions
+
+
+function getAnswers(element) {
+// e.target is the click element!
+  // If it was a <p> tag 
+  console.log('target: ',element.target);
+  console.log('nodeName: ', element.target.nodeName);
+  console.log('currentTarget', element.currentTarget);
+  // Grab text inside <p> tag for testing 
+  let text = element.target.innerHTML;
+  console.log('text is: ', text);
+  
+
+  // ANSWERS - QU 1 
+  if (element.target !== element.currentTarget && text === '1. 1996') {
+    // Set variable as result of choice to function
+    
+    let action = false;
+    // Display Choice result
+    loseGuess(action);
+    console.log('found it : Qu1 ', element.target.nodeName);
+  } else if ((element.target !== element.currentTarget && text === '2. 2000')) {
+    let action = false;
+    loseGuess(action);
+    console.log('found it : Qu2 ', element.target.nodeName);
+  } else if ((element.target !== element.currentTarget && text === '3. 1995')) {
+    console.log('Qu 1: Correct Guess 1995');
+    console.log('text before is: ', text);
+    // Set action value to be passed to function winGuess to O/P result 
+    let action = true;
+    text = "";
+    console.log('text after cleared is: ', text);
+    winGuess(action);
+    console.log('found it** : Qu3 ', element.target.nodeName, element.currentTarget, text);
+  } else if ((element.target !== element.currentTarget && text === '4. 2011')) {
+    let action = false;
+    loseGuess(action);
+    console.log('found it : Qu4 ', element.target.nodeName);
+  }
+    return;
+}
+
+choiceAns.addEventListener("click", getAnswers); 
+
+/*
 choiceAns.addEventListener("click", function(element) {
   // e.target is the click element!
   // If it was a <p> tag 
   console.log('target: ',element.target);
   console.log('nodeName: ', element.target.nodeName);
+  console.log('currentTarget', element.currentTarget);
   // Grab text inside <p> tag for testing 
   let text = element.target.innerHTML;
   console.log('text is: ', text);
+
+  // ANSWERS - QU 1 
+  if (element.target !== element.currentTarget && text == '1. 1996') {
+    // Set variable as result of choice to function
+    let action = false;
+    // Display Choice result
+    loseGuess(action);
+    console.log('found it : Qu1 ', element.target.nodeName);
+  } else if ((element.target !== element.currentTarget && text == '2. 2000')) {
+    let action = false;
+    loseGuess(action);
+    console.log('found it : Qu2 ', element.target.nodeName);
+  } else if ((element.target !== element.currentTarget && text == '3. 1995')) {
+    console.log('Qu 1: Correct Guess 1995');
+    let action = true;
+    winGuess(action);
+    console.log('found it** : Qu3 ', element.target.nodeName);
+  } else if ((element.target !== element.currentTarget && text == '4. 2011')) {
+    let action = false;
+    loseGuess(action);
+    console.log('found it : Qu4 ', element.target.nodeName);
+  }
+    return;
+  }); 
+
+*/
+
+/*
   // Target <p> tag of button and compare its contents
+  // ANSWERS - QU 1 
   if (element.target && element.target.nodeName == "P" && text == '1. 1996') {
     // Set variable as result of choice to function
     let action = false;
@@ -228,6 +319,7 @@ choiceAns.addEventListener("click", function(element) {
     loseGuess(action);
     console.log('found it : Qu2 ', element.target.nodeName);
   } else if ((element.target && element.target.nodeName == "P" && text == '3. 1995')) {
+    console.log('Qu 1: Correct Guess 1995');
     let action = true;
     winGuess(action);
     console.log('found it : Qu3 ', element.target.nodeName);
@@ -235,8 +327,9 @@ choiceAns.addEventListener("click", function(element) {
     let action = false;
     loseGuess(action);
     console.log('found it : Qu4 ', element.target.nodeName);
-  }
-  
+    return;
+  } 
+  // ANSWERS - QU 2
   if (element.target && element.target.nodeName == "P" && text == '1. Desk Applications') {
     // Set variable as result of choice to function
     let action = false;
@@ -244,6 +337,7 @@ choiceAns.addEventListener("click", function(element) {
     loseGuess(action);
     console.log('found it : Qu1 ', element.target.nodeName);
   } else if ((element.target && element.target.nodeName == "P" && text == '2. Client Server Web Applications')) {
+    console.log('Qu 1: Correct Guess - Client Server Web Applications');
     let action = true;
     winGuess(action);
     console.log('found it : Qu2 ', element.target.nodeName);
@@ -255,9 +349,58 @@ choiceAns.addEventListener("click", function(element) {
     let action = false;
     loseGuess(action);
     console.log('found it : Qu4 ', element.target.nodeName);
+    return;
   }
-
-});
+ 
+  // ANSWERS - QU 3
+  if (element.target && element.target.nodeName == "P" && text == '1. No') {
+    // Set variable as result of choice to function
+    let action = false;
+    // Display Choice result
+    loseGuess(action);
+    console.log('found it : Qu1 ', element.target.nodeName);
+  } else if ((element.target && element.target.nodeName == "P" && text == '2. Yes')) {
+    let action = true;
+    winGuess(action);
+    console.log('found it : Qu2 ', element.target.nodeName);
+    return;
+  }
+  // ANSWERS - QU 4 
+  if (element.target && element.target.nodeName == "P" && text == '1. Sun Microsystems') {
+    // Set variable as result of choice to function
+    let action = false;
+    // Display Choice result
+    loseGuess(action);
+    console.log('found it : Qu1 ', element.target.nodeName);
+  } else if ((element.target && element.target.nodeName == "P" && text == '2. Oracle')) {
+    let action = true;
+    winGuess(action);
+    console.log('found it : Qu2 ', element.target.nodeName);
+  } else if ((element.target && element.target.nodeName == "P" && text == '3. Google')) {
+    let action = false;
+    loseGuess(action);
+    console.log('found it : Qu3 ', element.target.nodeName);
+  } else {
+    let action = false;
+    loseGuess(action);
+    console.log('found it : Qu4 ', element.target.nodeName);
+    return;
+  }
+  // ANSWERS - QU 5 
+  if (element.target && element.target.nodeName == "P" && text == '1. Complied') {
+    // Set variable as result of choice to function
+    let action = false;
+    // Display Choice result
+    loseGuess(action);
+    console.log('found it : Qu1 ', element.target.nodeName);
+  } else if ((element.target && element.target.nodeName == "P" && text == '2. Interpreted')) {
+    let action = true;
+    winGuess(action);
+    console.log('found it : Qu2 ', element.target.nodeName);
+    return;
+  }
+  */
+//});
 
 
 

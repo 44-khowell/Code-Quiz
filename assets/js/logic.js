@@ -272,7 +272,19 @@ function clearScreen() {
   console.log(' ******* Now in clearScreen function ******** ');
   endScreenDiv.className = "";                   // This removes "hide" from the class and makes our div visible
   getFinalScore();                               // Get the final score of Quiz
+
+  // Setting Listener for Submit button activity
+  submitBtn.addEventListener("click", getInitials);
+
 }
+
+// Function for EventListener Fetching Quiz user initials after submission
+function getInitials(event) {
+  event.preventDefault();
+  const textInput = initials.value;                // Save initials when Submitted 
+  console.log('textInput value is: ', textInput);
+  return textInput;
+} 
 
 
 function getFinalScore() {
@@ -283,9 +295,16 @@ function getFinalScore() {
   finalScore.textContent = playerScore;                                           // Write final-score to Html via <span id>
 }
 
+/*
+submitBtn.addEventListener("submit", function (event) {
+  event.preventDefault();
 
+  const textInput = initials.value; 
+  console.log('textInput value is: ', textInput);
 
+})
 
+*/
 
 // ******* Start of Quiz - kick-off timer, display question *******
 

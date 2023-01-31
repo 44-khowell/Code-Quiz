@@ -15,6 +15,9 @@ var finalScore = document.querySelector("#final-score");
 // Variable used in Time Interval to display quiz duration in html
 var timeSpan = document.querySelector("#time");
 
+// Variable used in outputing to display the final score in html
+var finalScore = document.querySelector("#final-score");
+
 // Variables for function - startQuiz(event)
 const startBtn = document.getElementById('start');
 const startSection = document.getElementById('start-screen');
@@ -22,6 +25,10 @@ const questionTitle = document.getElementById('question-title');
 const choiceAns = document.getElementById('choices');
 const questionDiv = document.getElementById('questions');
 const lineDiv = document.getElementById('line');
+const endScreenDiv = document.getElementById('end-screen');
+const submitBtn = document.getElementById('submit');
+
+
 //const choicesBtnData = document.getElementById('choices');
 
 // Storage Variables 
@@ -36,7 +43,7 @@ var scoreCountWrong = localStorage.getItem('scoreCountWrong');        // Used to
 
 
 // Get player scores from the Quiz 
-function renderScores(playerScore) {
+function renderScores() {
 
   scoreCountCorrect = localStorage.getItem('scoreCountCorrect');    // Used to get value of Scorecount 
 
@@ -44,9 +51,8 @@ function renderScores(playerScore) {
   if (scoreCountCorrect === null) {
     console.log('No value stored in localstorage');
   return;
-  }
-  playerScore = scoreCountCorrect;
-  return playerScore;
+  }  
+  return scoreCountCorrect;
 }
 
 
@@ -94,9 +100,10 @@ console.log(questions);
 
 
 function quizQuestions(arrQuestionNo, arrQuestions) {
-
   // If the count is zero, exit function
- 
+  if (secondsLeft === 0) {
+    return;
+  }
 
   // console.log('The value of Qu counter is: ', arrQuestionNo);
   questionTitle.textContent = arrQuestions[arrQuestionNo].question;  // Assess 1st Quest from the QuObjectArray
@@ -109,10 +116,9 @@ function quizQuestions(arrQuestionNo, arrQuestions) {
       const answer = arrQuestions[arrQuestionNo].choiceAns[i];       // Extracting each answer in turn from the 1st array
       // console.log('each ans: ', answer);
   
-      //item = document.createElement('p');       // Creating an element <p> tag 
-      btn = document.createElement("BUTTON");     // Creating an eleement <button> tag
+      btn = document.createElement("BUTTON");     // Creating an element <button> tag
       btn.textContent = answer;                   // Let textContent be maapped into the BUTTON (so both are one)
-      choices.appendChild(btn);                   // Now append the BUTTON to the choices Listener element for BUTTON clicked    
+      choices.appendChild(btn);                   //, Now append the BUTTON to the choices Listener element for BUTTON clicked    
     }
     //Output Debug check
     console.log('**** Output check ****');
@@ -208,6 +214,7 @@ function winGuess(action) {
   if (secondsLeft == 0) {
     // Clears interval for the timer
     clearInterval(timerInterval);
+    clearScreen();                        //Clear screen when Timer=0
   }
 }
 
@@ -243,6 +250,7 @@ function loseGuess(action) {
   if (secondsLeft == 0) {
     // Clears interval for the timer
     clearInterval(timerInterval);
+    clearScreen();                        //Clear screen when Timer=0
   }
 }
 
@@ -257,6 +265,26 @@ function setScoreCountWrong() {
   localStorage.setItem('scoreCountWrong',scoreCountWrong);         // Used to set value in Localstorage              
 }
 
+function clearScreen() {
+  questionDiv.style.display = 'none';           // Stop displying <div> containing Questions & Answers
+  questionDiv.className = "";                   // This removes "hide" from the class and makes our question visible
+  
+  console.log(' ******* Now in clearScreen function ******** ');
+  endScreenDiv.className = "";                   // This removes "hide" from the class and makes our div visible
+  getFinalScore();                               // Get the final score of Quiz
+}
+
+
+function getFinalScore() {
+  var endScreen = document.createElement(endScreenDiv.style.display.endscreen);   // Creating an element for endscreen tag  
+  document.body.appendChild(endScreen);                                           // Now appending the <div> to the Body 
+  playerScore = renderScores();                                                   // Retreive score from Local Storage
+  console.log('player score is: ', playerScore);
+  finalScore.textContent = playerScore;                                           // Write final-score to Html via <span id>
+}
+
+
+
 
 
 // ******* Start of Quiz - kick-off timer, display question *******
@@ -269,14 +297,16 @@ startBtn.addEventListener("click", startQuiz);
 // Get the element, add click listener to detect Answers to Questions
 
 
-function getAnswers(element) {
+function getAnswers(event) {
+  //event.stopImmediatePropagation();
+
   // e.target is the click element!
   // If it was a <p> tag 
-  console.log('target: ',element.target);
-  console.log('nodeName: ', element.target.nodeName);
-  console.log('currentTarget', element.currentTarget);
+  console.log('target: ',event.target);
+  console.log('nodeName: ', event.target.nodeName);
+  console.log('currentTarget', event.currentTarget);
   // Grab text inside <p> tag for testing 
-  let text = element.target.innerHTML;
+  let text = event.target.innerHTML;
   console.log('text is: ', text);
   
   // De-coding of ANSWERS to questions

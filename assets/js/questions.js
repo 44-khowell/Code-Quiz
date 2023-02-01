@@ -1,8 +1,8 @@
 
-const logicVariable = 10; 
-
+//const logicVariable = 10; 
 
 /*
+
 // Questions Object Arrays 1
 const questions = [
   {
@@ -33,10 +33,12 @@ const questions = [
 ]
 //LOGGING outputs from the Object 
 console.log(questions);
-console.log('Question:',questions[0].question);
-console.log('Answer:',questions[0].choiceAns[0]);
-console.log('Index:',questions[0].Answer);
+//console.log('Question:',questions[0].question);
+//console.log('Answer:',questions[0].choiceAns[0]);
+//console.log('Index:',questions[0].Answer);
 */
+
+
 
 /*
 // Questions Arrays 1

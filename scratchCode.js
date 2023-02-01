@@ -222,7 +222,7 @@ function getLastUserResult() {
 }
 
 */
-
+/*
 // These functions are used by init
 function getWins() {
     // Get stored value from client storage, if it exists
@@ -238,3 +238,4 @@ function getWins() {
     win.textContent = winCounter;
   }
   
+*/

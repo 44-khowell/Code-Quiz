@@ -18,6 +18,7 @@ var timeSpan = document.querySelector("#time");
 // Variable used in outputing to display the final score in html
 var finalScore = document.querySelector("#final-score");
 
+
 // Variables for function - startQuiz(event)
 const startBtn = document.getElementById('start');
 const startSection = document.getElementById('start-screen');
@@ -27,7 +28,8 @@ const questionDiv = document.getElementById('questions');
 const lineDiv = document.getElementById('line');
 const endScreenDiv = document.getElementById('end-screen');
 const submitBtn = document.getElementById('submit');
-
+const highScore = document.getElementById('highscores');
+const clearBtn = document.getElementById('clear');
 
 //const choicesBtnData = document.getElementById('choices');
 
@@ -64,6 +66,7 @@ let item;
 let btn;
 var timerInterval;                          // Used in setTimer() function
 
+
 // Questions Object Arrays 1
 const questions = [
   {
@@ -92,6 +95,7 @@ const questions = [
       Answer: 1
   },
 ]
+
 //LOGGING outputs from the Object 
 console.log(questions);
 //console.log('Question:',questions[0].question);
@@ -264,6 +268,8 @@ function setScoreCountWrong() {
   scoreCountWrong--;           // Update (increase) score for each correct answer
   localStorage.setItem('scoreCountWrong',scoreCountWrong);         // Used to set value in Localstorage              
 }
+// ====== Storage - End =======
+
 
 function clearScreen() {
   questionDiv.style.display = 'none';           // Stop displying <div> containing Questions & Answers
@@ -275,18 +281,32 @@ function clearScreen() {
 
   // Setting Listener for Submit button activity
   submitBtn.addEventListener("click", getInitials);
-
 }
+
+function clearScreenSubmit() {
+  endScreenDiv.style.display = 'none';           // Stop displaying <div> containing Enter Initials
+  endScreenDiv.className = "";                   // This removes "hide" from the class and makes our page visible
+  
+  console.log(' ******* Now in clearScreenSubmit function ******** ');
+  
+}
+
+
 
 // Function for EventListener Fetching Quiz user initials after submission
 function getInitials(event) {
   event.preventDefault();
-  const textInput = initials.value;                // Save initials when Submitted 
-  console.log('textInput value is: ', textInput);
-  return textInput;
+  const textInput = initials.value;                    // Save initials when Submitted 
+  const initialUpCase = textInput.toUpperCase();       // Convert intials to Uppercase
+  localStorage.setItem('initials',initialUpCase);      // Store Initials in Local Storage upon Submit
+  console.log('textInput value is: ', initialUpCase);
+
+  clearScreenSubmit();
+  getHighScore();
+  return;
 } 
 
-
+// Function to Display the final score in (All Done!)
 function getFinalScore() {
   var endScreen = document.createElement(endScreenDiv.style.display.endscreen);   // Creating an element for endscreen tag  
   document.body.appendChild(endScreen);                                           // Now appending the <div> to the Body 
@@ -294,6 +314,40 @@ function getFinalScore() {
   console.log('player score is: ', playerScore);
   finalScore.textContent = playerScore;                                           // Write final-score to Html via <span id>
 }
+
+function getHighScore() {
+  var scoreDisplay = document.createElement(highScore.style.display.highscores);
+  //let score = localStorage.getItem('scoreCountCorrect'); 
+  let name = localStorage.getItem('initials'); 
+  scoreDisplay.textContent = name;
+  document.body.appendChild(scoreDisplay);
+
+ // window.location.assign(href="highScores.html");
+
+  
+
+/*
+ var highScore = document.createElement('li');
+ let name = localStorage.getItem('initials'); 
+ highScore.textContent = name;
+ console.log(highScore);
+ document.body.appendChild(highScore);
+*/
+
+
+  //var scoreDisplay = document.createElement(highScore.style.display.highscores);
+  //scoreDisplay.textContent = name;
+  //document.body.appendChild(scoreDisplay); 
+  //textContent = name;
+  //document.body.appendChild(scoreDisplay);
+  
+
+  
+  //console.log(scoreDisplay);
+  return;
+
+}
+
 
 /*
 submitBtn.addEventListener("submit", function (event) {

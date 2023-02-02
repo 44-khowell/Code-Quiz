@@ -1,16 +1,4 @@
 
-/*
-var startQButton = document.querySelector("#start");
-
-var submitButton = document.querySelector("#submit");
-var initialsText = document.querySelector("#initials");
-var finalScore = document.querySelector("#final-score");
-
-// Variables for Highscore 
-  var highScore = localStorage.getItem("highScore"); 
-  localStorage.setItem("finalScore", );
-
-*/
 
 // Variable used in Time Interval to display quiz duration in html
 var timeSpan = document.querySelector("#time");
@@ -133,7 +121,7 @@ function quizQuestions(arrQuestionNo, arrQuestions) {
     let index = arrQuestions[arrQuestionNo].Answer
     console.log('Answer:',arrQuestions[arrQuestionNo].choiceAns[index]);
     return;
-   // questionNumber++;                                 // Increment Question counter each time user selects one
+  
    // console.log('Question counter value: ',questionNumber);
 }
 
@@ -148,30 +136,9 @@ function startQuiz(event) {
  // let questionNumber = 0;                   
 
   quizQuestions(questionNumber, questions);
-/*
-  questionTitle.textContent = questions[0].question;  // Assess 1st Quest from the QuObjectArray
-
-// Checking how to access array size
-console.log('questions array length:',questions[0].choiceAns.length);
-
-  for (let i = 0; i < questions[0].choiceAns.length; i++) {
-    const answer = questions[0].choiceAns[i];       // Extracting each answer in turn from the 1st array
-    // console.log('each ans: ', answer);
-
-    const item = document.createElement('p');       // Creating an element <p> tag 
-    const btn = document.createElement("BUTTON");   // Creating an eleement <button> tag
-    item.textContent = answer;                      // Let textContent for the <p> tag be the selection from the array 
-    //choices.appendChild(item);                      // Now append text to <p> tag in html
-    choices.appendChild(btn).appendChild(item);     // Now append <button> to <p> tag & text to <p> tag within html
-  }
-
-  questionNumber++;                                 // Increment Question counter each time user selects one
-  console.log('Question counter value: ',questionNumber);
-*/
 
   // Start Timer for question duration
   setTimer();
-
 }
 // Logging Code only
 console.log('startButton o/p: ', startBtn);
@@ -294,31 +261,23 @@ function clearScreenSubmit() {
 }
 
 
-
 // Function for EventListener Fetching Quiz user initials after submission
 function getInitials(event) {
   event.preventDefault();
-  // let initialList = window.localStorage.getItem("initials") || [];
-  // console.log('init output', initialList);
-   const textInput = initials.value.trim();                    // Save initials when Submitted 
-  // const initialUpCase = textInput.toUpperCase();       // Convert intials to Uppercase
   
-  // localStorage.setItem('initials', initialList);      // Store Initials in Local Storage upon Submit
-  // console.log('textInput value is: ', initialUpCase);
-  // localStorage.setItem('placeholder', initialList);
-
-  let score = window.localStorage.getItem("scoreCountCorrect") || [];
-  let highscoresVal = JSON.parse(window.localStorage.getItem("highscores")) || [];
-  let scoreFinal = {score, 'initials':textInput};
+  const textInput = initials.value.trim();                    // Save initials when Submitted 
+  const textInputUpCase = textInput.toUpperCase();            // Convert intials to Uppercase
+  
+  let score = window.localStorage.getItem("scoreCountCorrect") || [];                 // Get score from Local Storage 
+  let highscoresVal = JSON.parse(window.localStorage.getItem("highscores")) || [];    // Get combined score and Initials 
+  let scoreFinal = {score, 'initials':textInputUpCase};                               // Create object of both 
   highscoresVal.push(scoreFinal);
-  window.localStorage.setItem("highscores", JSON.stringify(highscoresVal));
+  window.localStorage.setItem("highscores", JSON.stringify(highscoresVal));           // Restore boths values in Local Storeage
 
   console.log('final score: ', scoreFinal);
-  window.location.href="highscores.html";
-
-  // Clear current page and re-direct to Highscores.html page then display Scores
+  window.location.href="highscores.html";                                             // Re-direct to Highscores.html page then display Scores
+  // Now Clear current page 
   clearScreenSubmit();
- // getHighScore();
   return;
 } 
 
@@ -331,6 +290,8 @@ function getFinalScore() {
   console.log('player score is: ', playerScore);
   finalScore.textContent = playerScore;                                           // Write final-score to Html via <span id>
 }
+
+
 
 
 // ******* Start of Quiz - kick-off timer, display question *******
@@ -375,41 +336,13 @@ function getAnswers(event) {
 // Listen for Button selection to answers, then call function 
 choiceAns.addEventListener("click", getAnswers); 
 
-/*
-choiceAns.addEventListener("click", function(element) {
-  // e.target is the click element!
-  // If it was a <p> tag 
-  console.log('target: ',element.target);
-  console.log('nodeName: ', element.target.nodeName);
-  console.log('currentTarget', element.currentTarget);
-  // Grab text inside <p> tag for testing 
-  let text = element.target.innerHTML;
-  console.log('text is: ', text);
+function clearHighScores(event) {
+  document.getElementById(highScore).innerHTML = 'none';           // Stop displaying <div> containing Enter Initials
 
-  
+}
 
-
-
-
-
-/*
-// Get the element, add click listener to Qu Answers
-choiceAns.addEventListener("click", function(element) {
-  // e.target is the click element!
-  // If it was a <p> tag 
-  console.log('target: ',element.target);
-  console.log('nodeName: ', element.target.nodeName);
-
-  if (element.target && element.target.nodeName == "P") {
-    console.log('found it : ', element.target.nodeName);
-  }
-});
-*/
-
-
-
-
-
+// Listen for Button selection to clear All answers
+// clearBtn.addEventListener("click", clearHighScores); 
 
 // ******** Timer function code ********
 // *************************************

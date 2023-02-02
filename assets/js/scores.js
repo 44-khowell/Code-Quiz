@@ -24,3 +24,6 @@ function displayHighScores() {
 
 // Call function DisplayHighSocores
 displayHighScores();
+
+// Listen for Button selection to clear All answers
+//clearBtn.addEventListener("click", clearHighScores); 

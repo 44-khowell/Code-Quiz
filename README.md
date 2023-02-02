@@ -105,7 +105,8 @@ References:
 - https://stackoverflow.com/questions/1687296/what-is-dom-event-delegation
 - https://davidwalsh.name/event-delegate
 - https://stackoverflow.com/questions/58486102/adding-eventlistener-to-submit-button-in-a-form
-- https://www.freecodecamp.org/news/javascript-uppercase-how-to-capitalize-a-string-in-js-with-touppercase/
+- https://www.freecodecamp.org/news/- - javascript-uppercase-how-to-capitalize-a-string-in-js-with-touppercase/
+- https://www.sitepoint.com/javascript-truthy-falsy/
 
 
 

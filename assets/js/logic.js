@@ -92,12 +92,15 @@ console.log(questions);
 //console.log('Answer:',questions[0].choiceAns[0]);
 //console.log('Index:',questions[0].Answer);
 
-
+// =========== Quiz questions Function ===========
 function quizQuestions(arrQuestionNo, arrQuestions) {
   // If the count is zero, exit function
   if (secondsLeft === 0) {
     return;
   }
+
+  console.log('quizQuest - No', arrQuestionNo);
+  console.log('quizQuest - array', arrQuestions);
 
   // console.log('The value of Qu counter is: ', arrQuestionNo);
   questionTitle.textContent = arrQuestions[arrQuestionNo].question;  // Assess 1st Quest from the QuObjectArray
@@ -112,7 +115,7 @@ function quizQuestions(arrQuestionNo, arrQuestions) {
   
       btn = document.createElement("BUTTON");     // Creating an element <button> tag
       btn.textContent = answer;                   // Let textContent be maapped into the BUTTON (so both are one)
-      choices.appendChild(btn);                   //, Now append the BUTTON to the choices Listener element for BUTTON clicked    
+      choices.appendChild(btn);                   // Now append the BUTTON to the choices Listener element for BUTTON clicked    
     }
     //Output Debug check
     console.log('**** Output check ****');
@@ -135,6 +138,7 @@ function startQuiz(event) {
   
  // let questionNumber = 0;                   
 
+ // Call function for getting the Quiz Questions
   quizQuestions(questionNumber, questions);
 
   // Start Timer for question duration
@@ -166,9 +170,13 @@ function winGuess(action) {
   line.appendChild(tag).appendChild(italic);
 
   // Tests if user still has time to answer more questions
-  if (secondsLeft > 0) {
+  if ((secondsLeft > 0) && (questionNumber <= 3)) {
     // Set counter for the next question (if less than total no of Questions)
     questionNumber++;
+    // If array counter greater than five, reset to zero (for valid array assess)
+    if (questionNumber == 5) {
+      questionNumber = 0;
+    }
     console.log('Question counter value: ',questionNumber);
     console.log('Timer value: ',secondsLeft);
     console.log('current value of "action" is ', action);
@@ -179,9 +187,12 @@ function winGuess(action) {
     // Get the NEXT question from the Object array
     quizQuestions(questionNumber, questions);
 
-    //choiceAns.remove();
-    // choiceAns.style.display = 'none';
-    //italic.textContent = ' ';
+  } else {
+    console.log('**** questions finished now clearing screen ***');
+    clearInterval(timerInterval);
+    clearScreen();                        //Clear screen when Timer=0
+    // Re-set question number counter 
+    //questionNumber = 0;
   }
 
   if (secondsLeft == 0) {
@@ -248,6 +259,7 @@ function clearScreen() {
   endScreenDiv.className = "";                   // This removes "hide" from the class and makes our div visible
   getFinalScore();                               // Get the final score of Quiz
 
+  // *************   LISTENER  *****************
   // Setting Listener for Submit button activity
   submitBtn.addEventListener("click", getInitials);
 }
@@ -296,10 +308,10 @@ function getFinalScore() {
 
 // ******* Start of Quiz - kick-off timer, display question *******
 
-// Monitoring Quiz start button with eventListener 
+// ***********************   LISTENER   *************************
+// ====== Monitoring Quiz start button with eventListener =======
 startBtn.addEventListener("click", startQuiz);
 
-//startBtn.onclick = startQuiz;
 
 // ********* Detect Answers Buttons to Questions *********
 // Get the element, add click listener to detect Answers to Questions
@@ -333,17 +345,18 @@ function getAnswers(event) {
   }
   return;
 }
-// Listen for Button selection to answers, then call function 
+// **************************   LISTENER   ********************************
+// ====== Listen for Button selection to answers, then call function ======
 choiceAns.addEventListener("click", getAnswers); 
 
 
 function clearHighScores(event) {
-  document.getElementById(highScore).innerHTML = 'none';           // Stop displaying <div> containing Enter Initials
-
+ // document.getElementById(clearBtn).innerHTML = 'none';           // Stop displaying <div> containing Enter Initials
+ document.getElementById(highscores).innerHTML = 'none';
 }
 
 // Listen for Button selection to clear All answers
-// clearBtn.addEventListener("click", clearHighScores); 
+//clearBtn.addEventListener("click", clearHighScores); 
 
 
 // ******** Timer function code ********

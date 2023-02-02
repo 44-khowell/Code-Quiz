@@ -31,6 +31,8 @@ const submitBtn = document.getElementById('submit');
 const highScore = document.getElementById('highscores');
 const clearBtn = document.getElementById('clear');
 
+console.log('startButton ref:', startBtn);
+
 //const choicesBtnData = document.getElementById('choices');
 
 // Storage Variables 
@@ -296,15 +298,30 @@ function clearScreenSubmit() {
 // Function for EventListener Fetching Quiz user initials after submission
 function getInitials(event) {
   event.preventDefault();
-  const textInput = initials.value;                    // Save initials when Submitted 
-  const initialUpCase = textInput.toUpperCase();       // Convert intials to Uppercase
-  localStorage.setItem('initials',initialUpCase);      // Store Initials in Local Storage upon Submit
-  console.log('textInput value is: ', initialUpCase);
+  // let initialList = window.localStorage.getItem("initials") || [];
+  // console.log('init output', initialList);
+   const textInput = initials.value.trim();                    // Save initials when Submitted 
+  // const initialUpCase = textInput.toUpperCase();       // Convert intials to Uppercase
+  
+  // localStorage.setItem('initials', initialList);      // Store Initials in Local Storage upon Submit
+  // console.log('textInput value is: ', initialUpCase);
+  // localStorage.setItem('placeholder', initialList);
 
+  let score = window.localStorage.getItem("scoreCountCorrect") || [];
+  let highscoresVal = JSON.parse(window.localStorage.getItem("highscores")) || [];
+  let scoreFinal = {score, 'initials':textInput};
+  highscoresVal.push(scoreFinal);
+  window.localStorage.setItem("highscores", JSON.stringify(highscoresVal));
+
+  console.log('final score: ', scoreFinal);
+  window.location.href="highscores.html";
+
+  // Clear current page and re-direct to Highscores.html page then display Scores
   clearScreenSubmit();
-  getHighScore();
+ // getHighScore();
   return;
 } 
+
 
 // Function to Display the final score in (All Done!)
 function getFinalScore() {
@@ -315,56 +332,13 @@ function getFinalScore() {
   finalScore.textContent = playerScore;                                           // Write final-score to Html via <span id>
 }
 
-function getHighScore() {
-  var scoreDisplay = document.createElement(highScore.style.display.highscores);
-  //let score = localStorage.getItem('scoreCountCorrect'); 
-  let name = localStorage.getItem('initials'); 
-  scoreDisplay.textContent = name;
-  document.body.appendChild(scoreDisplay);
-
- // window.location.assign(href="highScores.html");
-
-  
-
-/*
- var highScore = document.createElement('li');
- let name = localStorage.getItem('initials'); 
- highScore.textContent = name;
- console.log(highScore);
- document.body.appendChild(highScore);
-*/
-
-
-  //var scoreDisplay = document.createElement(highScore.style.display.highscores);
-  //scoreDisplay.textContent = name;
-  //document.body.appendChild(scoreDisplay); 
-  //textContent = name;
-  //document.body.appendChild(scoreDisplay);
-  
-
-  
-  //console.log(scoreDisplay);
-  return;
-
-}
-
-
-/*
-submitBtn.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  const textInput = initials.value; 
-  console.log('textInput value is: ', textInput);
-
-})
-
-*/
 
 // ******* Start of Quiz - kick-off timer, display question *******
 
 // Monitoring Quiz start button with eventListener 
 startBtn.addEventListener("click", startQuiz);
 
+//startBtn.onclick = startQuiz;
 
 // ********* Detect Answers Buttons to Questions *********
 // Get the element, add click listener to detect Answers to Questions

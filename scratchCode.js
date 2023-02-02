@@ -17,6 +17,10 @@ function randomQuestions() {
   }
 
 
+
+
+
+  
 /*
   // ANSWERS - QU 1 
   if (element.target !== element.currentTarget && text === '1. 1996') {

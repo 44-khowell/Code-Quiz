@@ -1,10 +1,13 @@
 # Module 6 Challenge Web APIs: Code Quiz
 
-## Your Task
+## Description
 
-As you proceed in your journey to becoming a front-end web developer, it’s likely that you’ll be asked to complete a coding assessment, perhaps as part of an interview process. A typical coding assessment is a combination of multiple-choice questions and interactive coding challenges. 
+For this project given the outline of my On-the-job ticket, my main objectives is to:
 
-To help you become familiar with these tests and give you a chance to apply the skills from this module, this week’s challenge invites you to build a timed coding quiz with multiple-choice questions. This app will run in the browser, and will feature dynamically updated HTML and CSS powered by JavaScript code that you write. It will have a clean, polished, and responsive user interface. This week’s coursework has taught you all the skills you need to succeed in this challenge.
+	•	Build a timed coding quiz with multiple-choice questions implementing and interactive coding via JavaScript.
+
+	•	To achieve this aim, This app will run in the browser, and will feature dynamically updated HTML and CSS 
+	    powered by JavaScript code written by myself. 
 
 
 ## User Story
@@ -17,72 +20,116 @@ SO THAT I can gauge my progress compared to my peers
 
 ## Acceptance Criteria
 
-Create a code quiz that contains the following requirements:
+	GIVEN I am taking a code quiz
+	WHEN I click the start button
+	THEN a timer starts and I am presented with a question
+	WHEN I answer a question
+	THEN I am presented with another question
+	WHEN I answer a question incorrectly
+	THEN time is subtracted from the clock
+	WHEN all questions are answered or the timer reaches 0
+	THEN the game is over
+	WHEN the game is over
+	THEN I can save my initials and score
 
-* A start button that when clicked a timer starts and the first question appears.
- 
-  * Questions contain buttons for each answer.
-  * 
-  * When answer is clicked, the next question appears
-  * 
-  * If the answer clicked was incorrect then subtract time from the clock
 
-* The quiz should end when all questions are answered or the timer reaches 0.
+Presudocode
 
-  * When the game ends, it should display their score and give the user the ability to save their initials and their score
-  
+The user is presented with a Quiz Start Button 
+
+Button clicked 
+- User taken to questions via modal / webpage 
+	             
+- Starts and Displays Timer
+- first random question appears 
+- A list of answers are displayed
+- Each answer has a clickable button 
+- Answer Button when clicked: 
+
+	
+Will either: 
+                 
+If Correct:   
+- displays the Result to user 				  
+- Stores the stores the result score				             
+- timer checked for length of time spent                                            
+- and Displays to the User the Next question		                        
+			                                                                                                              	
+
+If Incorrect:  
+- Substract time from the clock (Timer) 
+- timer checked for length of time spent
+- displays the Result to user
+- Stores the stores the result score
+- and Displays to the User the Next question
+
+
+Quiz Ending  -  Check if ALL quiz questions are completed  OR  If Timer has reach zero  
+		      
+If Task / Timer completed : 
+- Display the final user score (All Done!!) 	                          
+- Collect user input for Initials (submission field)                                                             
+- Store the user Initials after user Submit Button                                                             
+- Display the Highscores page with Results 
+- Provide option to Clear Highscores 
+- Provide option to go back to start of Quiz 
+ 			    
+If Time / Task On-going:  
+- keep monitoring (timer)
+- keep checking Task complete 
+- Display & Log results 
+
+
 ## Mock-Up
 
 The following animation demonstrates the application functionality:
 
-![Animation of code quiz. Presses button to start quiz. Clicks the button for the answer to each question, displays if answer was correct or incorrect. Quiz finishes and displays high scores. User adds their intials, then clears their intials and starts over.](./assets/08-web-apis-challenge-demo.gif)
+![Animation of code quiz. Presses button to start quiz. Clicks the button for the answer to each question, displays if answer was correct or incorrect. Quiz finishes and displays high scores. User adds their intials, then clears their intials and starts over.](./img-assets/08-web-apis-challenge-demo.gif)
 
-## Grading Requirements
+## Page Link
 
-This challenge is graded based on the following criteria: 
+https://44-khowell.github.io
 
-### Technical Acceptance Criteria: 40%
+## Credits
 
-* Satisfies all of the above acceptance criteria.
+Tutorials: 
 
-### Deployment: 32%
+- https://www.youtube.com/watch?v=7QnIa5QcjLw
 
-* Application deployed at live URL.
+- Acknowledging Tutoring assitance 
 
-* Application loads with no errors.
+References:
 
-* Application GitHub URL submitted.
-
-* GitHub repository that contains application code.
-
-### Application Quality: 15%
-
-* Application user experience is intuitive and easy to navigate.
-
-* Application user interface style is clean and polished.
-
-* Application resembles the mock-up functionality provided in the challenge instructions.
-
-### Repository Quality: 13%
-
-* Repository has a unique name.
-
-* Repository follows best practices for file structure and naming conventions.
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages.
-
-* Repository contains quality README file with description, screenshot, and link to deployed application.
+- https://eronred.substack.com/p/arrays-and-objects-in-javascript
+- https://www.3schools.in/2021/11/how-to-create-button-in-javascript.html
+- https://stackoverflow.com/questions/1687296/what-is-dom-event-delegation
+- https://davidwalsh.name/event-delegate
+- https://stackoverflow.com/questions/58486102/adding-eventlistener-to-submit-button-in-a-form
+- https://www.freecodecamp.org/news/javascript-uppercase-how-to-capitalize-a-string-in-js-with-touppercase/
 
 
-## Review
 
-You are required to submit BOTH of the following for review:
 
-* The URL of the functional, deployed application.
 
-* The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
 
----
-© 2022 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
+## License 
+
+Copyright (c) Keith Howell
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

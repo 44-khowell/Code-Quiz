@@ -19,7 +19,7 @@ function displayHighScores() {
         highScore.appendChild(liTag);                                           // Now appending the <li> to the Body 
     }); 
   //  Object.values(initials);                                                   
-   // console.log(Object.values(initials));
+    console.log(Object.values(initials));
 }
 
 // Call function DisplayHighSocores

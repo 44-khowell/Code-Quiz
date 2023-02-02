@@ -336,6 +336,7 @@ function getAnswers(event) {
 // Listen for Button selection to answers, then call function 
 choiceAns.addEventListener("click", getAnswers); 
 
+
 function clearHighScores(event) {
   document.getElementById(highScore).innerHTML = 'none';           // Stop displaying <div> containing Enter Initials
 
@@ -343,6 +344,7 @@ function clearHighScores(event) {
 
 // Listen for Button selection to clear All answers
 // clearBtn.addEventListener("click", clearHighScores); 
+
 
 // ******** Timer function code ********
 // *************************************

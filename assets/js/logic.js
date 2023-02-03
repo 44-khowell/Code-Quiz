@@ -6,7 +6,6 @@ var timeSpan = document.querySelector("#time");
 // Variable used in outputing to display the final score in html
 var finalScore = document.querySelector("#final-score");
 
-
 // Variables for function - startQuiz(event)
 const startBtn = document.getElementById('start');
 const startSection = document.getElementById('start-screen');
@@ -50,16 +49,9 @@ function quizQuestions(arrQuestionNo, arrQuestions) {
     return;
   }
 
-  console.log('quizQuest - No', arrQuestionNo);
-  console.log('quizQuest - array', arrQuestions);
-
-  // console.log('The value of Qu counter is: ', arrQuestionNo);
   questionTitle.textContent = arrQuestions[arrQuestionNo].question;  // Assess 1st Quest from the QuObjectArray
 
-  // Checking how to access array size
-  console.log('questions ANS array length:',arrQuestions[arrQuestionNo].choiceAns.length);
-  console.log('incoming array is: ', arrQuestions);
-
+  // Extracting questions from the  Questions array 
     for (let i = 0; i < arrQuestions[arrQuestionNo].choiceAns.length; i++) {
       const answer = arrQuestions[arrQuestionNo].choiceAns[i];       // Extracting each answer in turn from the 1st array
       // console.log('each ans: ', answer);
@@ -68,26 +60,17 @@ function quizQuestions(arrQuestionNo, arrQuestions) {
       btn.textContent = answer;                   // Let textContent be mapped into the BUTTON (so both are one)
       choices.appendChild(btn);                   // Now append the BUTTON to the choices Listener element for BUTTON clicked    
     }
-    //Output Debug check
-    console.log('**** Output check ****');
-    console.log('Question:',arrQuestions[arrQuestionNo].question);
-    console.log('Index:',arrQuestions[arrQuestionNo].Answer);
-    let index = arrQuestions[arrQuestionNo].Answer
-    console.log('Answer:',arrQuestions[arrQuestionNo].choiceAns[index]);
     return;
-  
-   // console.log('Question counter value: ',questionNumber);
 }
 
-
+// ======================
 // ***** Quiz START *****
+// ======================
 
 function startQuiz(event) {
   startSection.style.display = 'none';      // Stop displying <div> containing Coding Quiz Chal
 
-  questionDiv.className = "";               // This removes "hide" from the class and makes our question visible
-  
- // let questionNumber = 0;                   
+  questionDiv.className = "";               // This removes "hide" from the class and makes our question visible              
 
  // Call function for getting the Quiz Questions
   quizQuestions(questionNumber, questions);
@@ -95,8 +78,6 @@ function startQuiz(event) {
   // Start Timer for question duration
   setTimer();
 }
-// Logging Code only
-console.log('startButton o/p: ', startBtn);
 
 
 function winGuess(action) {
@@ -110,7 +91,6 @@ function winGuess(action) {
   var tag = document.createElement('p');
   var italic = document.createElement('em');
   // Test if answer is correct or wrong 
-  console.log('The value of action is: ', action);
   if (action == true) {
     italic.textContent = "Correct!";
     setScoreCountCorrect();
@@ -128,9 +108,6 @@ function winGuess(action) {
     if (questionNumber == 5) {
       questionNumber = 0;
     }
-    console.log('Question counter value: ',questionNumber);
-    console.log('Timer value: ',secondsLeft);
-    console.log('current value of "action" is ', action);
 
     // CLEAR previous questions ANSWSERS
     choiceAns.textContent = '';
@@ -139,7 +116,6 @@ function winGuess(action) {
 
   } else {
     // **** questions finished now clearing screen ***
-    console.log('**** questions finished now clearing screen ***');
     clearInterval(timerInterval);
     clearScreen();                        //Clear screen when Timer=0
   }
@@ -175,9 +151,7 @@ function loseGuess(action) {
     if (questionNumber == 5) {
       questionNumber = 0;
     }
-    console.log('Question counter value: ',questionNumber);
-    console.log('Timer value: ',secondsLeft);
-    
+
     // CLEAR previous questions ANSWSERS
     choiceAns.textContent = '';
     // Get the NEXT question from the Object array 
@@ -185,7 +159,6 @@ function loseGuess(action) {
 
   } else {
     // **** questions finished now clearing screen ***
-    console.log('**** questions finished now clearing screen ***');
     // SPECIAL CASE - Set the Correct Score count to zero directly in Local Storage (as ALL questions answered were incorrect)
     scoreCountCorrect = 0;
     localStorage.setItem('scoreCountCorrect',scoreCountCorrect);
@@ -209,7 +182,7 @@ function setScoreCountCorrect() {
 
 function setScoreCountWrong() {
   scoreCountWrong++;           // Update (increase) score for each wrong answer
-  localStorage.setItem('scoreCountWrong',scoreCountWrong);         // Used to set value in Localstorage              
+  localStorage.setItem('scoreCountWrong',scoreCountWrong);             // Used to set value in Localstorage              
 }
 // ====== Storage - End =======
 
@@ -218,7 +191,6 @@ function clearScreen() {
   questionDiv.style.display = 'none';           // Stop displying <div> containing Questions & Answers
   questionDiv.className = "";                   // This removes "hide" from the class and makes our question visible
   
-  console.log(' ******* Now in clearScreen function ******** ');
   endScreenDiv.className = "";                   // This removes "hide" from the class and makes our div visible
   getFinalScore();                               // Get the final score of Quiz
 
@@ -229,10 +201,7 @@ function clearScreen() {
 
 function clearScreenSubmit() {
   endScreenDiv.style.display = 'none';           // Stop displaying <div> containing Enter Initials
-  endScreenDiv.className = "";                   // This removes "hide" from the class and makes our page visible
-  
-  console.log(' ******* Now in clearScreenSubmit function ******** ');
-  
+  endScreenDiv.className = "";                   // This removes "hide" from the class and makes our page visible  
 }
 
 
@@ -248,8 +217,6 @@ function getInitials(event) {
   let scoreFinal = {score, 'initials':textInputUpCase};                               // Create object of both 
   highscoresVal.push(scoreFinal);
   window.localStorage.setItem("highscores", JSON.stringify(highscoresVal));           // Restore boths values in Local Storeage
-
-  console.log('final score: ', scoreFinal);
   window.location.href="highscores.html";                                             // Re-direct to Highscores.html page then display Scores
   // Now Clear current page 
   clearScreenSubmit();
@@ -267,8 +234,6 @@ function getFinalScore() {
 }
 
 
-
-
 // ******* Start of Quiz - kick-off timer, display question *******
 
 // ***********************   LISTENER   *************************
@@ -279,20 +244,11 @@ startBtn.addEventListener("click", startQuiz);
 // ********* Detect Answers Buttons to Questions *********
 // Get the element, add click listener to detect Answers to Questions
 function getAnswers(event) {
-  //event.stopImmediatePropagation();
 
   // e.target is the click element!
   // If it was a <p> tag 
-  console.log('target: ',event.target);
-  console.log('nodeName: ', event.target.nodeName);
-  console.log('currentTarget', event.currentTarget);
   // Grab text inside <p> tag for testing 
   let text = event.target.innerHTML;
-  console.log('text is: ', text);
-
-  // De-bug *****
-  getFinalScore();
-  console.log('Debug: checking score count in getAnswers() before clearing ')
 
   // De-coding of ANSWERS to questions
   // Save the question being pointed to in the Questions Object array in a varaible 
@@ -302,12 +258,10 @@ function getAnswers(event) {
   if (question.Answer == question.choiceAns.indexOf(text)) {
     // Set variable as result of choice for function winGuess() 
     let action = true;
-    console.log('Debug: action value in ans correct', action);
     winGuess(action);
   } else { 
     // Set variable as result of choice for function loseGuess() 
     let action = false;
-    console.log('Debug: action value in ans wrong', action);
     loseGuess(action);
   }
   return;
@@ -315,12 +269,6 @@ function getAnswers(event) {
 // **************************   LISTENER   ********************************
 // ====== Listen for Button selection to answers, then call function ======
 choiceAns.addEventListener("click", getAnswers); 
-
-
-
-
-// Listen for Button selection to clear All answers
-//clearBtn.addEventListener("click", clearHighScores); 
 
 
 // ******** Timer function code ********
@@ -332,9 +280,7 @@ var secondsLeft = 15;
 function setTimer() {
     // Set interval in variable 
     var timerInterval = setInterval(function () {
-
         secondsLeft--;
-        //console.log('calc:',timeSpan + secondsLeft);
         
         // display current time 
         timeSpan.textContent = secondsLeft;
@@ -352,9 +298,6 @@ function setTimer() {
             clearInterval(timerInterval);
             // Clears screen if user exceeds the timer limit of 15secs
             clearScreen()
-            //loseGuess();
-            // Calls function to display current time 
-            //sendMessage();
         }
     }, 1000);
 }

@@ -1,10 +1,11 @@
 
+
+// Code for getting and display scores from local storage
+
 // Declare variable for targeted id highscores in hs.html
 const highScore = document.getElementById('highscores');
 const clearBtn = document.getElementById('clear');
 
-
-console.log('highScore value:', highScore);
 // Get Initials and Scores from Local Storage 
 let initials = window.localStorage.getItem("initials") || [];
 let scores = JSON.parse(window.localStorage.getItem("highscores")) || [];

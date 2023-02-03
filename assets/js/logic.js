@@ -17,7 +17,7 @@ const lineDiv = document.getElementById('line');
 const endScreenDiv = document.getElementById('end-screen');
 const submitBtn = document.getElementById('submit');
 const highScore = document.getElementById('highscores');
-const clearBtn = document.getElementById('clear');
+
 
 console.log('startButton ref:', startBtn);
 
@@ -55,6 +55,7 @@ let hasWon = false;
 let item;
 let btn;
 var timerInterval;                          // Used in setTimer() function
+var allAnswersWrong;
 
 
 // Questions Object Arrays 1
@@ -182,17 +183,15 @@ function winGuess(action) {
     console.log('current value of "action" is ', action);
 
     // CLEAR previous questions ANSWSERS
-    //line.textContent = '';
     choiceAns.textContent = '';
     // Get the NEXT question from the Object array
     quizQuestions(questionNumber, questions);
 
   } else {
+    // **** questions finished now clearing screen ***
     console.log('**** questions finished now clearing screen ***');
     clearInterval(timerInterval);
     clearScreen();                        //Clear screen when Timer=0
-    // Re-set question number counter 
-    //questionNumber = 0;
   }
 
   if (secondsLeft == 0) {
@@ -219,9 +218,13 @@ function loseGuess(action) {
   // Display ans in <p> tag
   line.appendChild(tag).appendChild(italic);
 
-  if (secondsLeft > 0) {
+  if (secondsLeft > 0 && (questionNumber <= 3)) {
     // Set counter for the next question
     questionNumber++;
+    // If array counter greater than five, reset to zero (for valid array assess)
+    if (questionNumber == 5) {
+      questionNumber = 0;
+    }
     console.log('Question counter value: ',questionNumber);
     console.log('Timer value: ',secondsLeft);
     
@@ -229,6 +232,16 @@ function loseGuess(action) {
     choiceAns.textContent = '';
     // Get the NEXT question from the Object array 
     quizQuestions(questionNumber, questions);
+
+  } else {
+    // **** questions finished now clearing screen ***
+    console.log('**** questions finished now clearing screen ***');
+    // SPECIAL CASE - Set the Correct Score count to zero directlyin Local Storage (as ALL questions answered were incorrect)
+    scoreCountCorrect = 0;
+    localStorage.setItem('scoreCountCorrect',scoreCountCorrect);
+    clearInterval(timerInterval);
+    clearScreen();
+    
   }
 
   if (secondsLeft == 0) {
@@ -240,12 +253,12 @@ function loseGuess(action) {
 
 // Local Storage functions 
 function setScoreCountCorrect() {
-  scoreCountCorrect++;           // Update (increase) score for each correct answer
+  scoreCountCorrect++;           // Update (increase) score for each correct answer 
   localStorage.setItem('scoreCountCorrect',scoreCountCorrect);         // Used to set value in Localstorage              
 }
 
 function setScoreCountWrong() {
-  scoreCountWrong--;           // Update (increase) score for each correct answer
+  scoreCountWrong++;           // Update (increase) score for each wrong answer
   localStorage.setItem('scoreCountWrong',scoreCountWrong);         // Used to set value in Localstorage              
 }
 // ====== Storage - End =======
@@ -315,8 +328,6 @@ startBtn.addEventListener("click", startQuiz);
 
 // ********* Detect Answers Buttons to Questions *********
 // Get the element, add click listener to detect Answers to Questions
-
-
 function getAnswers(event) {
   //event.stopImmediatePropagation();
 
@@ -350,10 +361,7 @@ function getAnswers(event) {
 choiceAns.addEventListener("click", getAnswers); 
 
 
-function clearHighScores(event) {
- // document.getElementById(clearBtn).innerHTML = 'none';           // Stop displaying <div> containing Enter Initials
- document.getElementById(highscores).innerHTML = 'none';
-}
+
 
 // Listen for Button selection to clear All answers
 //clearBtn.addEventListener("click", clearHighScores); 
@@ -386,7 +394,7 @@ function setTimer() {
         if (secondsLeft === 0) {
             // Stops execution of the action at set interval 
             clearInterval(timerInterval);
-            loseGuess();
+            //loseGuess();
             // Calls function to display current time 
             //sendMessage();
         }

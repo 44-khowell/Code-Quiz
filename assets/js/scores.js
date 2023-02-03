@@ -1,6 +1,7 @@
 
 // Declare variable for targeted id highscores in hs.html
 const highScore = document.getElementById('highscores');
+const clearBtn = document.getElementById('clear');
 
 
 console.log('highScore value:', highScore);
@@ -25,5 +26,19 @@ function displayHighScores() {
 // Call function DisplayHighSocores
 displayHighScores();
 
+/*
 // Listen for Button selection to clear All answers
-//clearBtn.addEventListener("click", clearHighScores); 
+//highScore.addEventListener("click", clearHighScores); 
+
+//function clearHighScores(event) {
+// document.getElementById(clearBtn).innerHTML = 'none';           // Stop displaying <div> containing Enter Initials// document.getElementById(highscores).innerHTML = 'hello';
+// event.target.innerHTML = "none";
+//}
+
+*/
+
+clearBtn.addEventListener("click", function() {
+  //document.getElementById("highscores").innerHTML = " ";
+  highscores.textContent = '';
+}); 
+

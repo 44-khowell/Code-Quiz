@@ -107,6 +107,7 @@ References:
 - https://stackoverflow.com/questions/58486102/adding-eventlistener-to-submit-button-in-a-form
 - https://www.freecodecamp.org/news/- - javascript-uppercase-how-to-capitalize-a-string-in-js-with-touppercase/
 - https://www.sitepoint.com/javascript-truthy-falsy/
+- https://stackoverflow.com/questions/5294842/refresh-a-page-using-javascript-or-html
 
 
 

@@ -81,7 +81,6 @@ function startQuiz(event) {
 
 
 function winGuess(action) {
-  console.log("now in winGuess function");
    // Clear out text Result for (#line) of previous action in prep for next incoming text
   line.innerHTML = "";
   // Create dividing line for result 
@@ -229,7 +228,6 @@ function getFinalScore() {
   var endScreen = document.createElement(endScreenDiv.style.display.endscreen);   // Creating an element for endscreen tag  
   document.body.appendChild(endScreen);                                           // Now appending the <div> to the Body 
   playerScore = renderScores();                                                   // Retreive score from Local Storage
-  console.log('player score is: ', playerScore);
   finalScore.textContent = playerScore;                                           // Write final-score to Html via <span id>
 }
 
@@ -253,7 +251,7 @@ function getAnswers(event) {
   // De-coding of ANSWERS to questions
   // Save the question being pointed to in the Questions Object array in a varaible 
   let question = questions[questionNumber];
-  console.log('question array is: ', question);
+
   // Compare the Answer property of the Questions Object to index of selected choiceAns
   if (question.Answer == question.choiceAns.indexOf(text)) {
     // Set variable as result of choice for function winGuess() 

@@ -2,7 +2,7 @@
 
 
 
-// Questions Object Arrays 1
+// Questions Object Array 
 const questions = [
   {
       question: "When was Java released?",

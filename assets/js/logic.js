@@ -19,19 +19,9 @@ const submitBtn = document.getElementById('submit');
 const highScore = document.getElementById('highscores');
 
 
-console.log('startButton ref:', startBtn);
-
-//const choicesBtnData = document.getElementById('choices');
-
 // Storage Variables 
 var scoreCountCorrect = localStorage.getItem('scoreCountCorrect');    // Used to get value of Scorecount 
 var scoreCountWrong = localStorage.getItem('scoreCountWrong');        // Used to get value of Scorecount 
-
-//localStorage.setItem('scoreCountCorrect',scoreCountCorrect);         // Used to set value in Localstorage              
-
-//scoreCount++;           // Update (increase) score for each correct answer
-//scoreCount--;           // Update (decrease) score for each incorrect answer
-
 
 
 // Get player scores from the Quiz 
@@ -41,61 +31,21 @@ function renderScores() {
 
   // Check if fetched storage variable is empty before displaying to page 
   if (scoreCountCorrect === null) {
-    console.log('No value stored in localstorage');
   return;
   }  
   return scoreCountCorrect;
 }
 
-
-
 // **** GLOABAL Variables ****
 let questionNumber = 0;                      // Initialise count for Questions Array, so that 1st question is selected
-let hasWon = false;
-let item;
-let btn;
-var timerInterval;                          // Used in setTimer() function
-var allAnswersWrong;
+let hasWon = false;                          // Qualifier for timer test condition 
+let btn;                                     // Varible for question button 
+var timerInterval;                           // Used in setTimer() function
 
-
-// Questions Object Arrays 1
-const questions = [
-  {
-      question: "When was Java released?",
-     choiceAns: ["1. 1996","2. 2000","3. 1995","4. 2011"],
-        Answer: 2                               //Index of choices array
-  },
-  {
-    question: "What is the most common application of Java?",
-   choiceAns: ["1. Desk Applications","2. Client Server Web Applications","3. Web Servers","4. Scripts"],
-      Answer: 1
-  },
-  {
-    question: "Is Java a OOP Language?",
-   choiceAns: ["1. No", "2. Yes"],
-      Answer: 1
-  },
-  {
-    question: "Who owns Java?",
-   choiceAns: ["1. Sun Microsystems","2. Google","3. Oracle","4. Mircosoft"],
-      Answer: 2
-  },
-  {
-    question: "Is Java a Compiled or Interpreted language?",
-   choiceAns: ["1. Complied","2. Interpreted"],
-      Answer: 1
-  },
-]
-
-//LOGGING outputs from the Object 
-console.log(questions);
-//console.log('Question:',questions[0].question);
-//console.log('Answer:',questions[0].choiceAns[0]);
-//console.log('Index:',questions[0].Answer);
 
 // =========== Quiz questions Function ===========
 function quizQuestions(arrQuestionNo, arrQuestions) {
-  // If the count is zero, exit function
+  // If the timer count is zero, exit function
   if (secondsLeft === 0) {
     return;
   }
@@ -115,7 +65,7 @@ function quizQuestions(arrQuestionNo, arrQuestions) {
       // console.log('each ans: ', answer);
   
       btn = document.createElement("BUTTON");     // Creating an element <button> tag
-      btn.textContent = answer;                   // Let textContent be maapped into the BUTTON (so both are one)
+      btn.textContent = answer;                   // Let textContent be mapped into the BUTTON (so both are one)
       choices.appendChild(btn);                   // Now append the BUTTON to the choices Listener element for BUTTON clicked    
     }
     //Output Debug check
@@ -236,12 +186,12 @@ function loseGuess(action) {
   } else {
     // **** questions finished now clearing screen ***
     console.log('**** questions finished now clearing screen ***');
-    // SPECIAL CASE - Set the Correct Score count to zero directlyin Local Storage (as ALL questions answered were incorrect)
+    // SPECIAL CASE - Set the Correct Score count to zero directly in Local Storage (as ALL questions answered were incorrect)
     scoreCountCorrect = 0;
     localStorage.setItem('scoreCountCorrect',scoreCountCorrect);
     clearInterval(timerInterval);
+    getFinalScore();
     clearScreen();
-    
   }
 
   if (secondsLeft == 0) {
@@ -339,7 +289,11 @@ function getAnswers(event) {
   // Grab text inside <p> tag for testing 
   let text = event.target.innerHTML;
   console.log('text is: ', text);
-  
+
+  // De-bug *****
+  getFinalScore();
+  console.log('Debug: checking score count in getAnswers() before clearing ')
+
   // De-coding of ANSWERS to questions
   // Save the question being pointed to in the Questions Object array in a varaible 
   let question = questions[questionNumber];
@@ -348,10 +302,12 @@ function getAnswers(event) {
   if (question.Answer == question.choiceAns.indexOf(text)) {
     // Set variable as result of choice for function winGuess() 
     let action = true;
+    console.log('Debug: action value in ans correct', action);
     winGuess(action);
   } else { 
     // Set variable as result of choice for function loseGuess() 
     let action = false;
+    console.log('Debug: action value in ans wrong', action);
     loseGuess(action);
   }
   return;
@@ -394,6 +350,8 @@ function setTimer() {
         if (secondsLeft === 0) {
             // Stops execution of the action at set interval 
             clearInterval(timerInterval);
+            // Clears screen if user exceeds the timer limit of 15secs
+            clearScreen()
             //loseGuess();
             // Calls function to display current time 
             //sendMessage();

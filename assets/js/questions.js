@@ -1,7 +1,6 @@
 
-//const logicVariable = 10; 
 
-/*
+
 
 // Questions Object Arrays 1
 const questions = [
@@ -33,23 +32,3 @@ const questions = [
 ]
 //LOGGING outputs from the Object 
 console.log(questions);
-//console.log('Question:',questions[0].question);
-//console.log('Answer:',questions[0].choiceAns[0]);
-//console.log('Index:',questions[0].Answer);
-*/
-
-
-
-/*
-// Questions Arrays 1
-var question1 = ["When was Java released?"]; 
-var question2 = ["What is the most common application of Java?"];
-var question3 = ["Is Java a OOP Language?"];
-var question4 = ["Who owns Java?"];
-var question5 = ["Is Java a Compiled or Interpreted language?"];
-
-// Question selection array 
-var questionsArray = [question1, question2, question3, question4, question5]; 
-console.log(questionsArray);
-
-*/

@@ -26,19 +26,12 @@ function displayHighScores() {
 // Call function DisplayHighSocores
 displayHighScores();
 
-/*
+// *****************   LISTENER  *****************
 // Listen for Button selection to clear All answers
-//highScore.addEventListener("click", clearHighScores); 
-
-//function clearHighScores(event) {
-// document.getElementById(clearBtn).innerHTML = 'none';           // Stop displaying <div> containing Enter Initials// document.getElementById(highscores).innerHTML = 'hello';
-// event.target.innerHTML = "none";
-//}
-
-*/
-
 clearBtn.addEventListener("click", function() {
-  //document.getElementById("highscores").innerHTML = " ";
-  highscores.textContent = '';
+    // Clear the scores from local storage  
+    localStorage.clear();
+    // Now refresh the current window to reflect change
+    window.location.reload();
 }); 
 

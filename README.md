@@ -88,7 +88,7 @@ The following animation demonstrates the application functionality:
 
 ## Page Link
 
-https://44-khowell.github.io
+https://44-khowell.github.io/Code-Quiz/
 
 ## Credits
 

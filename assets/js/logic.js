@@ -1,4 +1,79 @@
+/*
+********************** Presudocode *******************************
 
+START
+The user is presented with a Quiz Start Button 
+
+We click on the START Button x2 things happen
+ 	-  The Timer is initialised and started 
+	-  The score counter is initialised
+	-  The user is Displayed a question 
+	-  The user is also displayed a list of Answers to choose from 
+	
+
+	- Action: An eventListener() is actioning the starting of the counter 
+	- Action: We choose a random question for the user 
+	
+
+We click on ONE of the answers 4x Things happen
+	-  The Result of the choice is displayed 
+	-  The score counter is updated
+	-  Time remaining is checked 
+	-  The user is displayed another question 
+
+
+	- Action: A list of clickable Answers is provided 
+	- Action: An eventListener() is actioning the result 
+	- Action: The Result of the choice is displayed to the user 
+
+If Correct: 	
+- Action: The score count is placed in Local Storage
+- Action: The question Counter is updated
+- Action: Another random question is displayed
+
+If Incorrect: 
+- Action: The time is substracted from the clock (15 sec)
+- Action: The score count is placed in Local Storage
+- Action: The question Counter is updated
+- Action: Another random question is displayed
+
+We check the Timer if is ZERO  OR  Question Counter is ZERO 
+	  -  The page refreshes 
+	  -  The user msg the Game is over is displayed
+	  -  The User final score is presented 
+	  -  A text field Submission field appears with Submit button
+
+
+	- Action: Hide the current page
+	- Action: Display to user the Game is Over 
+	- Action: Retrieve and display the game score 
+	- Action: Display a Submission Box with Button
+	- Action: User Inputs Initials into Submission Box
+	- Action: Initials is placed in Local Storage
+	- Action: An eventListener() is actioning the Submit Button to new page ****
+
+
+We click on the Submit Button 5x things happen 
+	- The page refreshes 
+	- Initials is retrieved from Local Storage with the score 
+	- The user msg the High scores is displayed
+	- A field with the Users Initials and Score is displayed 
+	- Buttons to “Go Back” and “Clear High scores” active 
+
+
+	- Action:  Hide the current page
+	- Action:  Display to user “High Scores” 
+	- Action:  Field for Initials and Scores are Displayed 
+	- Action:  Submission Button Displayed 
+	- Action:  Go Back & Clear High Scores Buttons visible 
+	- Action:  An eventListener() is actioning the Clear High Scores Button
+	- Action:  With Clear High Scores Button clicked Field is cleared
+
+*/
+
+//******************************************************************** 
+// ************************ LOGIC CODE *******************************
+//******************************************************************** 
 
 // Variable used in Time Interval to display quiz duration in html
 var timeSpan = document.querySelector("#time");
